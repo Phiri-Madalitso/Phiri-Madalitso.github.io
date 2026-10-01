@@ -2,13 +2,189 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <title>Phiri-Madalitso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madalitso Phiri – Utvikler</title>
+  <meta name="description" content="Portefølje for Madalitso Phiri: webutvikling med C#, ASP.NET Core, React og Next.js.">
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1917;
+      --muted: #57534e;
+      --border: #e7e5e4;
+      --accent: #0f766e;
+      --tag-bg: #f0fdfa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0c0a09;
+        --surface: #1c1917;
+        --text: #f5f5f4;
+        --muted: #a8a29e;
+        --border: #292524;
+        --accent: #2dd4bf;
+        --tag-bg: #042f2e;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 64px 16px; }
+    header { margin-bottom: 56px; }
+    h1 { font-size: clamp(2rem, 5vw, 2.75rem); line-height: 1.15; margin: 0 0 12px; }
+    .lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; margin: 0 0 24px; }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    h2 { font-size: 1.4rem; margin: 0 0 20px; }
+    section { margin-bottom: 56px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; margin: 0; }
+    .tag {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--tag-bg);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .card p { margin: 0 0 16px; color: var(--muted); flex: 1; }
+    .card .skills { margin-bottom: 16px; }
+    .card a { color: var(--accent); font-weight: 600; text-decoration: none; margin-right: 16px; }
+    .card a:hover, .btn:hover { text-decoration: underline; }
+    .note { font-size: 0.85rem; color: var(--muted); }
+    footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 24px; }
+  </style>
 </head>
 <body>
-  <h1>Velkomen!</h1>
-  <p>Her er sidene mine:</p>
-  <ul>
-    <li><a href="https://phiri-madalitso.github.io/Nkom/">Nkom-prosjektet</a></li>
-  </ul>
+  <main>
+    <header>
+      <h1>Hei, jeg er Madalitso Phiri</h1>
+      <p class="lead">
+        Jeg er utvikler og lager webapplikasjoner med C#, ASP.NET Core, React og Next.js.
+        Her er et utvalg av prosjektene mine, fra studieprosjekter til nettsider for ekte bedrifter.
+      </p>
+      <div class="links">
+        <a class="btn primary" href="https://github.com/Phiri-Madalitso">GitHub</a>
+        <a class="btn" href="#prosjekter">Se prosjekter</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Teknologi</h2>
+      <ul class="skills">
+        <li class="tag">C#</li>
+        <li class="tag">ASP.NET Core</li>
+        <li class="tag">Entity Framework Core</li>
+        <li class="tag">JavaScript</li>
+        <li class="tag">TypeScript</li>
+        <li class="tag">React</li>
+        <li class="tag">Next.js</li>
+        <li class="tag">Python</li>
+        <li class="tag">SQL Server</li>
+        <li class="tag">MySQL / MariaDB</li>
+        <li class="tag">Docker</li>
+        <li class="tag">Azure</li>
+        <li class="tag">Git</li>
+      </ul>
+    </section>
+
+    <section id="prosjekter">
+      <h2>Prosjekter</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>CareCard</h3>
+          <p>Digitalt matkort for sykehjem. Ansatte foreslår endringer i pasienters matprofiler, og sykepleiere godkjenner dem. Flerspråklig, med automatisk oversettelse og rollebasert tilgang.</p>
+          <ul class="skills">
+            <li class="tag">React</li>
+            <li class="tag">ASP.NET Core</li>
+            <li class="tag">Azure</li>
+          </ul>
+          <div><a href="https://github.com/Phiri-Madalitso/CareCard">Kode</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Luftfartshinder</h3>
+          <p>Gruppeprosjekt med case fra Kartverket. Piloter registrerer luftfartshindre på et interaktivt kart, og registerfører godkjenner eller avviser dem. 75 automatiske tester.</p>
+          <ul class="skills">
+            <li class="tag">ASP.NET Core MVC</li>
+            <li class="tag">MariaDB</li>
+            <li class="tag">Docker</li>
+            <li class="tag">Leaflet</li>
+          </ul>
+          <div><a href="https://github.com/Phiri-Madalitso/kart-oppgave">Kode</a></div>
+        </article>
+
+        <article class="card">
+          <h3>EitherWay Running Club</h3>
+          <p>Headless nettbutikk for et løpeklesmerke. Bygget med Next.js og Shopify Storefront API, med egen merkevareprofil.</p>
+          <ul class="skills">
+            <li class="tag">Next.js</li>
+            <li class="tag">TypeScript</li>
+            <li class="tag">Shopify</li>
+          </ul>
+          <span class="note">Privat repo, kan vises på forespørsel.</span>
+        </article>
+
+        <article class="card">
+          <h3>Golden Emerald Guest House</h3>
+          <p>Nettside for et familiedrevet gjestehus i Zambia, med rom og priser, bildegalleri, kart og booking via telefon og WhatsApp.</p>
+          <ul class="skills">
+            <li class="tag">ASP.NET Core</li>
+            <li class="tag">Razor Pages</li>
+          </ul>
+          <div><a href="https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse">Kode</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Nkom</h3>
+          <p>Nettsideprosjekt publisert med GitHub Pages.</p>
+          <ul class="skills">
+            <li class="tag">HTML</li>
+            <li class="tag">CSS</li>
+          </ul>
+          <div>
+            <a href="https://phiri-madalitso.github.io/Nkom/">Live</a>
+            <a href="https://github.com/Phiri-Madalitso/Nkom">Kode</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Student Work Application</h3>
+          <p>Kommandolinjeapp som kobler studenter og bedrifter gjennom stillingsannonser og ferdighetsmatching.</p>
+          <ul class="skills">
+            <li class="tag">Python</li>
+          </ul>
+          <div><a href="https://github.com/Phiri-Madalitso/Student-Work-Application">Kode</a></div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Madalitso Phiri
+    </footer>
+  </main>
 </body>
 </html>
