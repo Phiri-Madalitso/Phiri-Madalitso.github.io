@@ -6,6 +6,7 @@
   <title>Madalitso Skjelnes | Full-stack developer</title>
   <meta name="description" content="Portfolio of Madalitso Skjelnes: full-stack developer building secure web applications with C# and ASP.NET Core.">
   <meta name="theme-color" content="#15191e">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -204,11 +205,24 @@
     @media (max-width: 600px) { .jobs li { grid-template-columns: 1fr; } .jobs .when { grid-row: auto; grid-column: 1; } }
 
     /* Skills */
-    .skill-rows { margin: 0; border-top: 2px solid var(--ink); }
-    .skill-row { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
-    .skill-row dt { font-weight: 700; color: var(--ink); }
-    .skill-row dd { margin: 0; }
-    @media (max-width: 600px) { .skill-row { grid-template-columns: 1fr; gap: .2rem; } }
+
+    .facts-plain { margin-top: .8rem; }
+    .more-about { margin-top: 1.2rem; }
+    .more-about summary { cursor: pointer; font-weight: 700; color: var(--accent); width: fit-content; padding: .3rem 0; list-style: none; }
+    .more-about summary::-webkit-details-marker { display: none; }
+    .more-about summary::after { content: " +"; }
+    .more-about[open] summary::after { content: " −"; }
+    .more-wrap { margin-top: 1.6rem; }
+    .jobs .extra[hidden] { display: none; }
+    .acc-list { display: grid; gap: .8rem; }
+    .acc { background: var(--card); border: 2px solid var(--ink); border-radius: .9rem; transition: box-shadow .2s ease; }
+    .acc[open] { box-shadow: 4px 4px 0 var(--ink); }
+    .acc summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; padding: 1rem 1.3rem; font-weight: 700; color: var(--ink); list-style: none; min-height: 48px; }
+    .acc summary::-webkit-details-marker { display: none; }
+    .acc summary::after { content: "+"; font-size: 1.4rem; line-height: 1; color: var(--accent); }
+    .acc[open] summary::after { content: "−"; }
+    .acc p { margin: 0; padding: 0 1.3rem 1.1rem; }
+    .acc summary:hover { color: var(--accent); }
 
     /* ---------- Closing CTA ---------- */
     .cta { position: relative; min-height: 82vh; display: flex; align-items: center; overflow: hidden; isolation: isolate; background: var(--ink); padding: 6rem 0; }
@@ -350,7 +364,7 @@
         <div>
           <p class="eyebrow" data-reveal>Full-stack developer</p>
           <h1 class="hero-title" data-reveal>Madalitso Skjelnes</h1>
-          <p class="hero-lead" data-reveal>I am a full-stack developer who builds secure web applications with C# and ASP.NET Core. Student at the University of Agder, IT intern at Nkom.</p>
+          <p class="hero-lead" data-reveal>I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.</p>
           <div class="hero-cta" data-reveal>
             <a href="#projects" class="btn">See my projects</a>
             <a href="#cta" class="btn btn-ghost">Get in touch</a>
@@ -367,14 +381,19 @@
         </figure>
         <div class="about-text" data-reveal>
           <div class="section-head"><h2>About</h2></div>
-          <p>I'm a full-stack developer and third-year IT student. I build the whole product, from database and backend to interface, with security in mind. I like systems that are simple to use and hard to break.</p>
+          <p>I'm a full-stack developer and IT student. I build the whole product, from database to interface, and I like systems that are simple to use and hard to break.</p>
           <ul class="facts">
             <li><b>Role</b><span>Full-stack developer</span></li>
             <li><b>Now</b><span>IT intern, Nkom</span></li>
             <li><b>Studying</b><span>BSc, University of Agder</span></li>
-            <li><b>Next</b><span>MSc Applied AI, OsloMet (2027)</span></li>
-            <li><b>Languages</b><span>Norwegian, English, Spanish, Nyanja, Bemba</span></li>
           </ul>
+          <details class="more-about">
+            <summary>More about me</summary>
+            <ul class="facts facts-plain">
+              <li><b>Languages</b><span>Norwegian, English, Spanish, Nyanja, Bemba</span></li>
+              <li><b>Based in</b><span>Kristiansand / Oslo</span></li>
+            </ul>
+          </details>
         </div>
       </div>
     </section>
@@ -387,35 +406,31 @@
             <span class="badge">Shared 1st place</span>
             <div class="meta">2025 · Kartverket &amp; Norsk Luftambulanse</div>
             <h3>Aviation Obstacle Registry</h3>
-            <p>Web app for reporting and validating aviation obstacles. I built the backend, security, role-based access and the pilot map.</p>
-            <div class="tags"><span class="tag">ASP.NET Core</span><span class="tag">MariaDB</span><span class="tag">RBAC</span></div>
+            <p>Web app for reporting aviation obstacles. I built the backend, security and the pilot map.</p>
             <a class="go card-link" href="https://github.com/Phiri-Madalitso/m.prosjekt">View source →</a>
           </article>
           <article class="card" data-reveal>
             <div class="meta">2026 · Independent</div>
             <h3>Golden Emerald Guest House</h3>
-            <p>A complete website for a guest house in Zambia. Built full-stack, from requirements and UI to security review and Azure deployment.</p>
-            <div class="tags"><span class="tag">Razor Pages</span><span class="tag">Azure</span></div>
+            <p>A full website for a guest house in Zambia, built end to end.</p>
             <a class="go card-link" href="https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse">View source →</a>
           </article>
           <article class="card" data-reveal>
             <div class="meta">2026 · Independent</div>
             <h3>CareCard</h3>
-            <p>A digital food and care card app that helps nursing home staff manage patient meal plans.</p>
-            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Healthcare</span></div>
+            <p>A digital meal and care card app for nursing homes.</p>
             <a class="go card-link" href="https://github.com/Phiri-Madalitso/CareCard">View source →</a>
           </article>
           <article class="card" data-reveal>
             <div class="meta">2026 · Practicum</div>
             <h3>Nkom Practicum</h3>
-            <p>Report, diary and presentation from my internship at the Norwegian Communications Authority.</p>
-            <div class="tags"><span class="tag">HTML</span><span class="tag">Norwegian</span></div>
+            <p>Report, diary and presentation from my internship at Nkom.</p>
             <a class="go card-link" href="https://phiri-madalitso.github.io/Nkom/">Open live site →</a>
           </article>
         </div>
 
         <div class="more-wrap" data-reveal>
-          <button class="btn btn-dark" id="more-btn" data-noi18n type="button" aria-expanded="false" aria-controls="more-list">Show more projects</button>
+          <button class="btn btn-dark toggle-btn" data-noi18n data-more="Show more projects" data-less="Show fewer projects" data-target="#more-list" type="button" aria-expanded="false" aria-controls="more-list">Show more projects</button>
           <a href="https://github.com/Phiri-Madalitso?tab=repositories"><b>All on GitHub →</b></a>
         </div>
         <ul class="more-list" id="more-list" hidden>
@@ -435,19 +450,22 @@
         <ul class="jobs" data-reveal>
           <li><div><h3>IT Intern</h3><div class="org">Norwegian Communications Authority (Nkom)</div></div><span class="when">Aug – Dec 2026</span></li>
           <li><div><h3>Teaching Assistant, Programming</h3><div class="org">University of Agder</div></div><span class="when">2025 – now</span></li>
-          <li><div><h3>Student Mentor</h3><div class="org">University of Agder</div></div><span class="when">2025 – now</span></li>
-          <li><div><h3>IT Support</h3><div class="org">University of Agder</div></div><span class="when">2025 – 2026</span></li>
-          <li><div><h3>Student Council Representative</h3><div class="org">University of Agder</div></div><span class="when">2024 – 2025</span></li>
+          <li class="extra" hidden><div><h3>Student Mentor</h3><div class="org">University of Agder</div></div><span class="when">2025 – now</span></li>
+          <li class="extra" hidden><div><h3>IT Support</h3><div class="org">University of Agder</div></div><span class="when">2025 – 2026</span></li>
+          <li class="extra" hidden><div><h3>Student Council Representative</h3><div class="org">University of Agder</div></div><span class="when">2024 – 2025</span></li>
         </ul>
+        <div class="more-wrap" data-reveal>
+          <button class="btn btn-dark toggle-btn" data-noi18n data-more="Show all experience" data-less="Show less" data-target=".jobs .extra" type="button" aria-expanded="false">Show all experience</button>
+        </div>
 
         <div class="section-head" style="margin-top:4rem" data-reveal><h2>Full-stack skills</h2></div>
-        <dl class="skill-rows" data-reveal>
-          <div class="skill-row"><dt>Frontend</dt><dd>HTML, CSS, JavaScript, TypeScript, React</dd></div>
-          <div class="skill-row"><dt>Backend</dt><dd>C#, .NET 9, ASP.NET Core, Entity Framework</dd></div>
-          <div class="skill-row"><dt>Database</dt><dd>SQL, MariaDB, migrations</dd></div>
-          <div class="skill-row"><dt>Security</dt><dd>Access control, secure development, threat assessment</dd></div>
-          <div class="skill-row"><dt>Tools</dt><dd>Git, Docker, Linux, Azure</dd></div>
-        </dl>
+        <div class="acc-list" data-reveal>
+          <details class="acc"><summary>Frontend</summary><p>HTML, CSS, JavaScript, TypeScript, React</p></details>
+          <details class="acc"><summary>Backend</summary><p>C#, .NET 9, ASP.NET Core, Entity Framework</p></details>
+          <details class="acc"><summary>Database</summary><p>SQL, PostgreSQL, MariaDB, migrations</p></details>
+          <details class="acc"><summary>Security</summary><p>Access control, secure development, threat assessment</p></details>
+          <details class="acc"><summary>Tools</summary><p>Git, Docker, Linux, Azure</p></details>
+        </div>
       </div>
     </section>
 
@@ -473,7 +491,7 @@
       <span>
         <a href="mailto:madalitsoskjelnes@hotmail.com">Email</a>
         <a href="https://github.com/Phiri-Madalitso">GitHub</a>
-        <a href="https://linkedin.com/in/madalitso-skjelnes">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/madalitso-skjelnes-426741290/">LinkedIn</a>
       </span>
     </div>
   </footer>
@@ -485,20 +503,27 @@
         "About": "Om meg", "Projects": "Prosjekter", "Experience": "Erfaring", "Contact": "Kontakt",
         "Skip to main content": "Hopp til hovedinnhold", "Loading portfolio": "Laster inn portefølje",
         "Full-stack developer": "Fullstack-utvikler",
-        "I am a full-stack developer who builds secure web applications with C# and ASP.NET Core. Student at the University of Agder, IT intern at Nkom.": "Jeg er fullstack-utvikler og bygger sikre webapplikasjoner med C# og ASP.NET Core. Student ved Universitetet i Agder og IT-praktikant hos Nkom.",
+        "I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.": "Jeg er fullstack-utvikler og bygger sikre webapplikasjoner med C# og ASP.NET Core. Student ved Universitetet i Agder og IT-praktikant hos Nkom.",
         "See my projects": "Se prosjektene mine", "Get in touch": "Ta kontakt",
         "At work as an IT intern at Nkom": "På jobb som IT-praktikant hos Nkom",
         "I'm a full-stack developer and third-year IT student. I build the whole product, from database and backend to interface, with security in mind. I like systems that are simple to use and hard to break.": "Jeg er fullstack-utvikler og tredjeårsstudent i IT. Jeg bygger hele produktet, fra database og backend til brukergrensesnitt, med sikkerhet i tankene. Jeg liker systemer som er enkle å bruke og vanskelige å knekke.",
-        "Role": "Rolle", "Now": "Nå", "IT intern, Nkom": "IT-praktikant, Nkom",
+        "Role": "Rolle", "Aviation Obstacle Registry": "Luftfartshinderregister", "SQL, PostgreSQL, MariaDB, migrations": "SQL, PostgreSQL, MariaDB, migrasjoner",
+        "I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.": "Jeg bygger sikre webapplikasjoner med C# og ASP.NET Core. Akkurat nå IT-praktikant hos Nkom.",
+        "I'm a full-stack developer and IT student. I build the whole product, from database to interface, and I like systems that are simple to use and hard to break.": "Jeg er fullstack-utvikler og IT-student. Jeg bygger hele produktet, fra database til brukergrensesnitt, og liker systemer som er enkle å bruke og vanskelige å knekke.",
+        "More about me": "Mer om meg", "Based in": "Bor i",
+        "Web app for reporting aviation obstacles. I built the backend, security and the pilot map.": "Webapp for rapportering av luftfartshindre. Jeg bygde backend, sikkerhet og kartet for piloter.",
+        "A full website for a guest house in Zambia, built end to end.": "Et komplett nettsted for et gjestehus i Zambia, bygget fra bunnen av.",
+        "A digital meal and care card app for nursing homes.": "En digital mat- og omsorgskort-app for sykehjem.",
+        "Report, diary and presentation from my internship at Nkom.": "Rapport, dagbok og presentasjon fra praksisen min hos Nkom.",
+        "Show all experience": "Vis all erfaring", "Show less": "Vis mindre", "Now": "Nå", "IT intern, Nkom": "IT-praktikant, Nkom",
         "Studying": "Studerer", "BSc, University of Agder": "Bachelor, Universitetet i Agder",
-        "Next": "Neste", "MSc Applied AI, OsloMet (2027)": "Master i anvendt kunstig intelligens, OsloMet (2027)",
         "Languages": "Språk", "Norwegian, English, Spanish, Nyanja, Bemba": "Norsk, engelsk, spansk, nyanja, bemba",
         "Selected projects": "Utvalgte prosjekter", "Shared 1st place": "Delt 1. plass",
         "2026 · Independent": "2026 · Eget prosjekt", "2026 · Practicum": "2026 · Praksisoppgave",
-        "Web app for reporting and validating aviation obstacles. I built the backend, security, role-based access and the pilot map.": "Webapp for rapportering og validering av luftfartshindre. Jeg bygde backend, sikkerhet, rollebasert tilgangsstyring og kartet for piloter.",
-        "A complete website for a guest house in Zambia. Built full-stack, from requirements and UI to security review and Azure deployment.": "Et komplett nettsted for et gjestehus i Zambia. Bygget fullstack, fra krav og brukergrensesnitt til sikkerhetsgjennomgang og utrulling på Azure.",
-        "A digital food and care card app that helps nursing home staff manage patient meal plans.": "En digital mat- og omsorgskort-app som hjelper ansatte på sykehjem med å håndtere måltidsplaner.",
-        "Report, diary and presentation from my internship at the Norwegian Communications Authority.": "Rapport, dagbok og presentasjon fra praksisen min hos Nasjonal kommunikasjonsmyndighet.",
+        "Web app for reporting aviation obstacles. I built the backend, security and the pilot map.": "Webapp for rapportering og validering av luftfartshindre. Jeg bygde backend, sikkerhet, rollebasert tilgangsstyring og kartet for piloter.",
+        "A full website for a guest house in Zambia, built end to end.": "Et komplett nettsted for et gjestehus i Zambia. Bygget fullstack, fra krav og brukergrensesnitt til sikkerhetsgjennomgang og utrulling på Azure.",
+        "A digital meal and care card app for nursing homes.": "En digital mat- og omsorgskort-app som hjelper ansatte på sykehjem med å håndtere måltidsplaner.",
+        "Report, diary and presentation from my internship at Nkom.": "Rapport, dagbok og presentasjon fra praksisen min hos Nasjonal kommunikasjonsmyndighet.",
         "Healthcare": "Helse", "Norwegian": "Norsk",
         "View source →": "Se kildekode →", "Open live site →": "Åpne nettsiden →", "Source →": "Kildekode →", "All on GitHub →": "Alle på GitHub →",
         "Show more projects": "Vis flere prosjekter", "Show fewer projects": "Vis færre prosjekter",
@@ -557,8 +582,9 @@
             el.setAttribute(a, lang === "no" && NO[el.dataset[k]] ? NO[el.dataset[k]] : el.dataset[k]);
           });
         });
-        var more = document.getElementById("more-btn");
-        if (more) more.textContent = window.t(more.getAttribute("aria-expanded") === "true" ? "Show fewer projects" : "Show more projects");
+        document.querySelectorAll(".toggle-btn").forEach(function (b) {
+          b.textContent = window.t(b.getAttribute("aria-expanded") === "true" ? b.dataset.less : b.dataset.more);
+        });
         var note = document.getElementById("cta-note");
         if (note) note.innerHTML = "&nbsp;";
         var md = document.querySelector('meta[name="description"]');
@@ -634,13 +660,16 @@
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && links.classList.contains("open")) { setMenu(false); toggler.focus(); } });
       window.addEventListener("resize", function () { if (window.innerWidth > 900) setMenu(false); });
 
-      /* Show more projects */
-      var moreBtn = document.getElementById("more-btn"), moreList = document.getElementById("more-list");
-      moreBtn.addEventListener("click", function () {
-        var open = moreList.hasAttribute("hidden");
-        if (open) moreList.removeAttribute("hidden"); else moreList.setAttribute("hidden", "");
-        moreBtn.setAttribute("aria-expanded", open ? "true" : "false");
-        moreBtn.textContent = window.t(open ? "Show fewer projects" : "Show more projects");
+      /* Click-to-reveal buttons */
+      document.querySelectorAll(".toggle-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var open = btn.getAttribute("aria-expanded") !== "true";
+          document.querySelectorAll(btn.dataset.target).forEach(function (el) {
+            if (open) el.removeAttribute("hidden"); else el.setAttribute("hidden", "");
+          });
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          btn.textContent = window.t(open ? btn.dataset.less : btn.dataset.more);
+        });
       });
 
       /* "No thanks" button that runs away from the pointer */
