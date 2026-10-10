@@ -136,8 +136,6 @@
       linear-gradient(90deg, var(--ink) 0%, rgba(21,25,30,.65) 26%, rgba(21,25,30,0) 58%),
       linear-gradient(0deg, var(--ink) 0%, rgba(21,25,30,0) 22%),
       linear-gradient(180deg, rgba(21,25,30,.5) 0%, rgba(21,25,30,0) 22%); }
-    @media (prefers-reduced-motion: no-preference) { .hero-portrait img { animation: portrait-in 1.8s cubic-bezier(.22,1,.36,1) both; } }
-    @keyframes portrait-in { from { transform: scale(1.08); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @media (max-width: 820px) {
       #hero { align-items: flex-end; padding: 6rem 0 3rem; }
       .hero-portrait { width: 100%; }
@@ -207,6 +205,7 @@
     /* Skills */
 
     .facts-plain { margin-top: .8rem; }
+    .more-note { margin: .8rem 0 0 !important; font-size: 1rem !important; }
     .more-about { margin-top: 1.2rem; }
     .more-about summary { cursor: pointer; font-weight: 700; color: var(--accent); width: fit-content; padding: .3rem 0; list-style: none; }
     .more-about summary::-webkit-details-marker { display: none; }
@@ -224,6 +223,18 @@
     .acc p { margin: 0; padding: 0 1.3rem 1.1rem; }
     .acc summary:hover { color: var(--accent); }
 
+    .team-photo { margin: 0 0 2.5rem; }
+    .team-photo { position: relative; overflow: hidden; border: 2px solid var(--ink); border-radius: .9rem; background: var(--card); }
+    .team-photo img { width: 100%; height: auto; display: block; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+    .team-photo:hover img { transform: scale(1.03); }
+    .team-photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1.4rem 1rem; color: #fff; font-weight: 600; font-size: .95rem; background: linear-gradient(0deg, rgba(21,25,30,.8), rgba(21,25,30,0)); }
+    .team-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: start; }
+    .team-grid p { margin: 0 0 1.1rem; font-size: 1.08rem; }
+    .soft-title { margin: 0 0 1rem; font-size: 1.05rem; }
+    @media (max-width: 820px) { .team-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (hover: none) { .team-photo:hover img { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .team-photo img { transition: none; } .team-photo:hover img { transform: none; } }
+
     /* ---------- Closing CTA ---------- */
     .cta { position: relative; min-height: 82vh; display: flex; align-items: center; overflow: hidden; isolation: isolate; background: var(--ink); padding: 6rem 0; }
     .cta::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 55% 60% at 50% 110%, rgba(47,107,110,.35), rgba(47,107,110,0) 70%); }
@@ -234,7 +245,7 @@
     .btn-xl { padding: 1.1rem 2.6rem; font-size: 1.25rem; border-radius: 1rem; }
     .no-slot { position: relative; display: inline-block; }
     .btn-no { position: relative; z-index: 2; translate: var(--fx, 0px) var(--fy, 0px); rotate: var(--fr, 0deg); transition: translate .38s cubic-bezier(.22,1,.36,1), rotate .38s cubic-bezier(.22,1,.36,1), transform .2s ease, background-color .2s ease; user-select: none; touch-action: none; }
-    .cta-note { margin: 2rem 0 0; min-height: 1.6em; font-size: .95rem; color: var(--accent-soft); letter-spacing: .04em; }
+    .cta-note { margin: 2rem auto 0; max-width: 34rem; min-height: 3.4em; font-size: 1.05rem; color: var(--accent-soft); letter-spacing: .04em; }
     @media (max-width: 520px) { .btn-xl { width: 100%; max-width: 20rem; } .no-slot { width: 100%; max-width: 20rem; } .no-slot .btn-no { width: 100%; } }
 
     /* ---------- Footer ---------- */
@@ -316,6 +327,15 @@
       .btn:hover { transform: none; }
     }
 
+    /* ---------- Living background and interaction ---------- */
+    .net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; }
+    .cta::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: radial-gradient(440px circle at var(--sx, 70%) var(--sy, 40%), rgba(168,195,196,.11), rgba(168,195,196,0) 62%); }
+    .projects .card { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); will-change: transform; }
+    .projects .card:hover { transform: perspective(900px) translate(-3px, -3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+    @media (hover: none) { .projects .card:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .projects .card, .projects .card:hover { transform: none; } }
+
     /* ---------- Motion ---------- */
     @keyframes reveal-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: no-preference) {
@@ -343,6 +363,7 @@
       <a class="brand" href="#hero">MADALITSO</a>
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#cta" class="nav-cta">Contact</a></li>
@@ -362,10 +383,10 @@
       <div class="hero-portrait" aria-hidden="false"><img src="images/portrait.jpg" alt="Portrait of Madalitso Skjelnes" width="1320" height="2342" fetchpriority="high"></div>
       <div class="container hero-wrap">
         <div>
-          <p class="eyebrow" data-reveal>Full-stack developer</p>
-          <h1 class="hero-title" data-reveal>Madalitso Skjelnes</h1>
-          <p class="hero-lead" data-reveal>I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.</p>
-          <div class="hero-cta" data-reveal>
+          <p class="eyebrow">Full-stack developer</p>
+          <h1 class="hero-title">Madalitso Skjelnes</h1>
+          <p class="hero-lead">I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.</p>
+          <div class="hero-cta">
             <a href="#projects" class="btn">See my projects</a>
             <a href="#cta" class="btn btn-ghost">Get in touch</a>
           </div>
@@ -381,7 +402,8 @@
         </figure>
         <div class="about-text" data-reveal>
           <div class="section-head"><h2>About</h2></div>
-          <p>I'm a full-stack developer and IT student. I build the whole product, from database to interface, and I like systems that are simple to use and hard to break.</p>
+          <p>I'm from Bergen with Zambian roots, now studying in Kristiansand. Two countries and five languages taught me to listen first and build second.</p>
+          <p>I'm a full-stack developer who loves delivering real results that people actually use. I enjoy working with others, and I build software that is simple, secure and made for the person on the other end.</p>
           <ul class="facts">
             <li><b>Role</b><span>Full-stack developer</span></li>
             <li><b>Now</b><span>IT intern, Nkom</span></li>
@@ -389,11 +411,40 @@
           </ul>
           <details class="more-about">
             <summary>More about me</summary>
+            <p class="more-note">Some of my favourite projects are websites for small businesses back home in Zambia.</p>
             <ul class="facts facts-plain">
-              <li><b>Languages</b><span>Norwegian, English, Spanish, Nyanja, Bemba</span></li>
+              <li><b>From</b><span>Bergen, with roots in Zambia</span></li>
               <li><b>Based in</b><span>Kristiansand / Oslo</span></li>
+              <li><b>Languages</b><span>Norwegian, English, Spanish, Nyanja, Bemba</span></li>
+              <li><b>I care about</b><span>Real results, teamwork and people</span></li>
             </ul>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="band" style="padding-top:0">
+      <div class="container">
+        <div class="section-head" data-reveal><h2>Teamwork</h2></div>
+        <figure class="team-photo" data-reveal>
+          <img src="images/team.jpg" alt="The six members of CORE-6 standing side by side outdoors at UiA" width="2000" height="1124" loading="lazy">
+          <figcaption>CORE-6, my bachelor group at UiA</figcaption>
+        </figure>
+        <div class="team-grid">
+          <div data-reveal>
+            <p>I'm part of CORE-6, a group of six IT students at the University of Agder who build solutions for real clients. Our bachelor project runs in spring 2027.</p>
+            <p>I like building good software, and I like building it with good people.</p>
+            <p><a class="btn" href="https://noanor.github.io/" target="_blank" rel="noopener">Visit CORE-6 <span aria-hidden="true">&rarr;</span></a></p>
+          </div>
+          <div data-reveal>
+            <h3 class="soft-title">How I work</h3>
+            <div class="acc-list">
+              <details class="acc"><summary>Collaboration</summary><p>Working in a six-person group on a real client project, and in larger codebases with Git.</p></details>
+              <details class="acc"><summary>Communication</summary><p>Explaining code and concepts to others, as a teaching assistant and student mentor.</p></details>
+              <details class="acc"><summary>Leadership</summary><p>I take responsibility and lead by example. I led backend and security on the aviation registry, guide first-year students, and represented my class on the student council.</p></details>
+              <details class="acc"><summary>Multicultural</summary><p>Fluent in five languages and comfortable working across cultures.</p></details>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -470,6 +521,7 @@
     </section>
 
     <section id="cta" class="cta">
+      <canvas class="net" aria-hidden="true"></canvas>
       <div class="container cta-inner">
         <p class="eyebrow" data-reveal>Let's talk</p>
         <h2 class="cta-title" data-reveal>Want to work on a project together?</h2>
@@ -507,7 +559,22 @@
         "See my projects": "Se prosjektene mine", "Get in touch": "Ta kontakt",
         "At work as an IT intern at Nkom": "På jobb som IT-praktikant hos Nkom",
         "I'm a full-stack developer and third-year IT student. I build the whole product, from database and backend to interface, with security in mind. I like systems that are simple to use and hard to break.": "Jeg er fullstack-utvikler og tredjeårsstudent i IT. Jeg bygger hele produktet, fra database og backend til brukergrensesnitt, med sikkerhet i tankene. Jeg liker systemer som er enkle å bruke og vanskelige å knekke.",
-        "Role": "Rolle", "Aviation Obstacle Registry": "Luftfartshinderregister", "SQL, PostgreSQL, MariaDB, migrations": "SQL, PostgreSQL, MariaDB, migrasjoner",
+        "Role": "Rolle",
+        "I'm from Bergen with Zambian roots, now studying in Kristiansand. Two countries and five languages taught me to listen first and build second.": "Jeg er bergenser med røtter i Zambia, og studerer nå i Kristiansand. To land og fem språk har lært meg å lytte først og bygge etterpå.",
+        "I'm a full-stack developer who loves delivering real results that people actually use. I enjoy working with others, and I build software that is simple, secure and made for the person on the other end.": "Jeg er fullstack-utvikler og elsker å levere ekte resultater som folk faktisk bruker. Jeg liker å jobbe sammen med andre, og bygger programvare som er enkel, trygg og laget for personen i andre enden.",
+        "Some of my favourite projects are websites for small businesses back home in Zambia.": "Noen av favorittprosjektene mine er nettsteder for små bedrifter hjemme i Zambia.",
+        "From": "Fra", "Bergen, with roots in Zambia": "Bergen, med røtter i Zambia",
+        "I care about": "Jeg bryr meg om", "Real results, teamwork and people": "Ekte resultater, samarbeid og mennesker",
+        "Teamwork": "Teamarbeid", "CORE-6, my bachelor group at UiA": "CORE-6, bachelorgruppen min ved UiA",
+        "The six members of CORE-6 standing side by side outdoors at UiA": "De seks medlemmene i CORE-6 side om side utendørs ved UiA",
+        "I'm part of CORE-6, a group of six IT students at the University of Agder who build solutions for real clients. Our bachelor project runs in spring 2027.": "Jeg er en del av CORE-6, en gruppe på seks IT-studenter ved Universitetet i Agder som bygger løsninger for reelle oppdragsgivere. Bachelorprosjektet vårt går våren 2027.",
+        "I like building good software, and I like building it with good people.": "Jeg liker å bygge god programvare, og jeg liker å gjøre det sammen med gode folk.",
+        "Visit CORE-6": "Besøk CORE-6",
+        "How I work": "Slik jobber jeg", "Collaboration": "Samarbeid", "Communication": "Kommunikasjon", "Leadership": "Lederskap", "Multicultural": "Flerkulturell",
+        "Working in a six-person group on a real client project, and in larger codebases with Git.": "Jobber i en gruppe på seks med et reelt oppdrag, og i større kodebaser med Git.",
+        "Explaining code and concepts to others, as a teaching assistant and student mentor.": "Forklarer kode og begreper til andre, som læringsassistent og studentmentor.",
+        "I take responsibility and lead by example. I led backend and security on the aviation registry, guide first-year students, and represented my class on the student council.": "Jeg tar ansvar og går foran som et godt eksempel. Jeg ledet backend og sikkerhet på luftfartshinderregisteret, veileder førsteårsstudenter og representerte klassen min i studentrådet.",
+        "Fluent in five languages and comfortable working across cultures.": "Flytende i fem språk og trygg på å jobbe på tvers av kulturer.", "Aviation Obstacle Registry": "Luftfartshinderregister", "SQL, PostgreSQL, MariaDB, migrations": "SQL, PostgreSQL, MariaDB, migrasjoner",
         "I build secure web applications with C# and ASP.NET Core. Currently IT intern at Nkom.": "Jeg bygger sikre webapplikasjoner med C# og ASP.NET Core. Akkurat nå IT-praktikant hos Nkom.",
         "I'm a full-stack developer and IT student. I build the whole product, from database to interface, and I like systems that are simple to use and hard to break.": "Jeg er fullstack-utvikler og IT-student. Jeg bygger hele produktet, fra database til brukergrensesnitt, og liker systemer som er enkle å bruke og vanskelige å knekke.",
         "More about me": "Mer om meg", "Based in": "Bor i",
@@ -559,6 +626,7 @@
       var lang = "en", orig = new WeakMap();
       function norm(s) { return s.trim().replace(/\s+/g, " "); }
       window.t = function (s) { return lang === "no" && NO[s] ? NO[s] : s; };
+      window.getLang = function () { return lang; };
 
       function apply() {
         var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
@@ -585,8 +653,8 @@
         document.querySelectorAll(".toggle-btn").forEach(function (b) {
           b.textContent = window.t(b.getAttribute("aria-expanded") === "true" ? b.dataset.less : b.dataset.more);
         });
-        var note = document.getElementById("cta-note");
-        if (note) note.innerHTML = "&nbsp;";
+        if (window.refreshNote) window.refreshNote();
+        else { var note = document.getElementById("cta-note"); if (note) note.innerHTML = "&nbsp;"; }
         var md = document.querySelector('meta[name="description"]');
         if (md) md.setAttribute("content", DESC[lang]);
         document.documentElement.lang = lang === "no" ? "nb" : "en";
@@ -633,6 +701,113 @@
         setTimeout(open, MAX);
       }
 
+      /* Living background: an interactive network of nodes (move to connect, click to add) */
+      (function () {
+        document.querySelectorAll(".net").forEach(function (cv) {
+          var host = cv.parentElement, ctx = cv.getContext("2d");
+          if (!ctx) return;
+          var pts = [], w = 0, h = 0, mouse = null, raf = 0, running = false, visible = true;
+          function mk(x, y, burst) {
+            var a = Math.random() * Math.PI * 2, v = burst ? 0.9 : 0.12 + Math.random() * 0.2;
+            return { x: x == null ? Math.random() * w : x, y: y == null ? Math.random() * h : y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1 + Math.random() * 1.4 };
+          }
+          function size() {
+            var r = host.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+            w = r.width; h = r.height;
+            cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            var target = Math.min(Math.round(w * h / (w < 820 ? 17000 : 13000)), 110);
+            while (pts.length < target) pts.push(mk());
+            if (pts.length > target + 30) pts.length = target + 30;
+          }
+          function frame(animate) {
+            ctx.clearRect(0, 0, w, h);
+            var i, j, p, q, dx, dy, d;
+            for (i = 0; i < pts.length; i++) {
+              p = pts[i];
+              if (animate) {
+                if (mouse) {
+                  dx = p.x - mouse.x; dy = p.y - mouse.y; d = Math.sqrt(dx * dx + dy * dy);
+                  if (d < 100 && d > 0.1) { p.vx += dx / d * 0.05; p.vy += dy / d * 0.05; }
+                }
+                p.vx *= 0.995; p.vy *= 0.995;
+                var sp = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (sp < 0.1) { p.vx *= 1.02; p.vy *= 1.02; }
+                if (sp > 1.4) { p.vx *= 0.9; p.vy *= 0.9; }
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > w) { p.vx *= -1; p.x = Math.min(Math.max(p.x, 0), w); }
+                if (p.y < 0 || p.y > h) { p.vy *= -1; p.y = Math.min(Math.max(p.y, 0), h); }
+              }
+            }
+            ctx.lineWidth = 1;
+            for (i = 0; i < pts.length; i++) {
+              p = pts[i];
+              for (j = i + 1; j < pts.length; j++) {
+                q = pts[j]; dx = p.x - q.x; dy = p.y - q.y; d = dx * dx + dy * dy;
+                if (d < 14400) {
+                  ctx.strokeStyle = "rgba(168,195,196," + ((1 - Math.sqrt(d) / 120) * 0.3).toFixed(3) + ")";
+                  ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+                }
+              }
+              if (mouse) {
+                dx = p.x - mouse.x; dy = p.y - mouse.y; d = Math.sqrt(dx * dx + dy * dy);
+                if (d < 170) {
+                  ctx.strokeStyle = "rgba(130,205,205," + ((1 - d / 170) * 0.75).toFixed(3) + ")";
+                  ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                }
+              }
+            }
+            ctx.fillStyle = "rgba(190,220,220,.85)";
+            for (i = 0; i < pts.length; i++) { p = pts[i]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
+          }
+          function loop() { if (!running) return; frame(true); raf = requestAnimationFrame(loop); }
+          function start() { if (running || reduced || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
+          function stop() { running = false; cancelAnimationFrame(raf); }
+
+          size();
+          frame(false);
+          if (reduced) { window.addEventListener("resize", function () { size(); frame(false); }); return; }
+
+          if ("ResizeObserver" in window) new ResizeObserver(size).observe(host); else window.addEventListener("resize", size);
+          host.addEventListener("pointermove", function (e) { var r = host.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; }, { passive: true });
+          host.addEventListener("pointerleave", function () { mouse = null; });
+          host.addEventListener("pointerdown", function (e) {
+            if (e.target.closest("a, button, summary, input")) return;
+            var r = host.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+            for (var k = 0; k < 4; k++) pts.push(mk(x, y, true));
+            if (pts.length > 160) pts.splice(0, pts.length - 160);
+          });
+          document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else start(); });
+          if ("IntersectionObserver" in window) {
+            new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); else stop(); }).observe(host);
+          } else start();
+        });
+
+        if (reduced) return;
+
+        /* Soft spotlight that follows the pointer in the dark sections */
+        [document.getElementById("cta")].forEach(function (sec) {
+          if (!sec) return;
+          sec.addEventListener("pointermove", function (e) {
+            var r = sec.getBoundingClientRect();
+            sec.style.setProperty("--sx", (e.clientX - r.left) + "px");
+            sec.style.setProperty("--sy", (e.clientY - r.top) + "px");
+          }, { passive: true });
+        });
+
+        /* 3D tilt on project cards */
+        if (window.matchMedia("(hover: hover)").matches) {
+          document.querySelectorAll(".projects .card").forEach(function (card) {
+            card.addEventListener("pointermove", function (e) {
+              var r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+              card.style.setProperty("--ry", ((x - 0.5) * 7) + "deg");
+              card.style.setProperty("--rx", ((0.5 - y) * 7) + "deg");
+            });
+            card.addEventListener("pointerleave", function () { card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+          });
+        }
+      })();
+
       /* Navbar solid after the hero + active link */
       var navbar = document.getElementById("navbar"), hero = document.getElementById("hero"), ticking = false;
       var anchors = Array.prototype.slice.call(document.querySelectorAll("#nav-links a:not(.nav-cta)"));
@@ -678,11 +853,42 @@
             area = document.getElementById("cta"), note = document.getElementById("cta-note");
         if (!btn) return;
         var RADIUS = 110, MARGIN = 14, x = 0, y = 0, dodges = 0, lastMouse = null;
-        var lines = [
-          "", "Nice try.", "Too slow.", "It really doesn't want to be clicked.",
-          "Are you sure? The other button is right there.", "Still trying? Impressive.",
-          "This could go on all day.", "Okay, okay. Just reach out."
+        var wasNear = false, lastAt = 0;
+        // One line per attempt, escalating. Then a rotating pool for the stubborn.
+        var LINES = [
+          { en: "Nice try.", no: "Fin prøvd." },
+          { en: "Too slow.", no: "For treg." },
+          { en: "It really doesn't want to be clicked.", no: "Den vil virkelig ikke bli klikket på." },
+          { en: "Fun fact: I built this button to win.", no: "Artig fakta: Jeg bygde denne knappen for å vinne." },
+          { en: "Are you sure? The other button is right there.", no: "Sikker? Den andre knappen er rett der." },
+          { en: "Come on, give it up.", no: "Nå må du gi deg." },
+          { en: "You're enjoying this website, aren't you? Reach out already.", no: "Du koser deg på nettsiden, ser jeg. Ta kontakt da." },
+          { en: "Give up, just reach out.", no: "Gi opp, bare ta kontakt." },
+          { en: "I write secure code. This button is very secure.", no: "Jeg skriver sikker kode. Denne knappen er veldig sikker." },
+          { en: "No vulnerabilities found. Try the other button.", no: "Ingen sikkerhetshull funnet. Prøv den andre knappen." },
+          { en: "I'm friendlier than this button, I promise.", no: "Jeg er hyggeligere enn denne knappen, lover." },
+          { en: "Teamwork means saying yes sometimes.", no: "Teamarbeid betyr å si ja iblant." },
+          { en: "I've shipped to production with less resistance than this.", no: "Jeg har sendt kode til produksjon med mindre motstand enn dette." },
+          { en: "Your mouse is getting tired. An email would be faster.", no: "Musa di begynner å bli sliten. En e-post går fortere." },
+          { en: "Okay, you're officially persistent. I like that. Let's talk.", no: "Ok, du er offisielt utholdende. Det liker jeg. La oss snakke." },
+          { en: "Fine, I respect the effort. Now click the other one.", no: "Greit, jeg respekterer innsatsen. Klikk på den andre nå." }
         ];
+        var POOL = [
+          { en: "Attempt {n}. I'm not even surprised anymore.", no: "Forsøk {n}. Jeg er ikke engang overrasket lenger." },
+          { en: "You could have emailed me by now.", no: "Du kunne ha sendt meg en e-post nå." },
+          { en: "This is cardio for your mouse hand.", no: "Dette er kondisjonstrening for musehånda." },
+          { en: "I'll still be here when you give up. So will the other button.", no: "Jeg er her fortsatt når du gir deg. Det er den andre knappen også." },
+          { en: "Persistence like this belongs in a team. Reach out!", no: "Utholdenhet som dette hører hjemme i et team. Ta kontakt!" },
+          { en: "Plot twist: the button is winning.", no: "Plot twist: knappen vinner." }
+        ];
+        function isNo() { return window.getLang && window.getLang() === "no"; }
+        function render() {
+          if (!dodges) { note.innerHTML = "&nbsp;"; return; }
+          var item = dodges <= LINES.length ? LINES[dodges - 1] : POOL[dodges % POOL.length];
+          var text = (isNo() ? item.no : item.en).replace("{n}", dodges);
+          note.textContent = text + "  ·  " + (isNo() ? "Forsøk" : "Attempts") + ": " + dodges;
+        }
+        window.refreshNote = render;
         function dist(l, t, w, h, mx, my) {
           var dx = Math.max(l - mx, 0, mx - (l + w)), dy = Math.max(t - my, 0, my - (t + h));
           return Math.sqrt(dx * dx + dy * dy);
@@ -694,16 +900,16 @@
           btn.style.setProperty("--fr", (rot || 0) + "deg");
         }
         function said() {
-          dodges++;
-          note.textContent = window.t(dodges < lines.length ? lines[dodges] : lines[lines.length - 1]);
-          if (dodges >= 2 && dodges < lines.length) note.textContent += "  ·  " + window.t("dodged") + " " + dodges + "×";
+          var now = Date.now();
+          if (now - lastAt < 250) return;
+          lastAt = now; dodges++; render();
         }
         function update(mx, my) {
           var s = slot.getBoundingClientRect(), w = btn.offsetWidth, h = btn.offsetHeight;
           var left = s.left + (s.width - w) / 2, top = s.top + (s.height - h) / 2;
-          if (dist(left, top, w, h, mx, my) > RADIUS + 60 && (x || y)) { set(0, 0, 0); return; }
+          if (dist(left, top, w, h, mx, my) > RADIUS + 60 && (x || y)) { wasNear = false; set(0, 0, 0); return; }
           var l = left + x, t = top + y, d = dist(l, t, w, h, mx, my);
-          if (d >= RADIUS) return;
+          if (d >= RADIUS) { wasNear = false; return; }
           var dx = l + w / 2 - mx, dy = t + h / 2 - my, len = Math.sqrt(dx * dx + dy * dy) || 1;
           var step = RADIUS - d + 40, nx = x + dx / len * step, ny = y + dy / len * step;
           var a = area.getBoundingClientRect();
@@ -717,11 +923,11 @@
               if (dist(left + tx, top + ty, w, h, mx, my) >= RADIUS * 2) { nx = tx; ny = ty; break; }
             }
           }
-          if (Math.abs(nx - x) > 4 || Math.abs(ny - y) > 4) said();
+          if (!wasNear) { wasNear = true; said(); }
           set(nx, ny, (Math.random() - .5) * 14);
         }
         if (reduced) {
-          btn.addEventListener("click", function (e) { e.preventDefault(); note.textContent = window.t("Hmm. How about the other button?"); });
+          btn.addEventListener("click", function (e) { e.preventDefault(); said(); });
           btn.setAttribute("tabindex", "0"); btn.removeAttribute("aria-hidden");
           return;
         }
@@ -730,6 +936,7 @@
         window.addEventListener("scroll", function () { if (lastMouse) update(lastMouse[0], lastMouse[1]); }, { passive: true });
         btn.addEventListener("pointerdown", function (e) {
           e.preventDefault();
+          wasNear = false;
           var r = btn.getBoundingClientRect();
           update(e.clientX || r.left + r.width / 2, e.clientY || r.top + r.height / 2);
         });
