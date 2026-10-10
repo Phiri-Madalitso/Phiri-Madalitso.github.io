@@ -7,14 +7,16 @@
   <meta name="description" content="Portfolio of Madalitso Skjelnes: full-stack developer building secure web applications with C# and ASP.NET Core.">
   <meta name="theme-color" content="#15191e">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" as="image" href="images/portrait-700.webp" imagesrcset="images/portrait-700.webp 700w, images/portrait-1100.webp 1100w" imagesizes="(max-width: 820px) 100vw, 56vw" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap"></noscript>
   <script>
     // Loader only shows the first time the page is opened in a session
     (function () {
       try {
-        if (!sessionStorage.getItem("ms-loaded")) {
+        if (!sessionStorage.getItem("ms-loaded") && !(navigator.connection && navigator.connection.saveData)) {
           document.documentElement.classList.add("show-loader");
           sessionStorage.setItem("ms-loaded", "1");
         }
@@ -331,7 +333,7 @@
     .net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; }
     .cta::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
       background: radial-gradient(440px circle at var(--sx, 70%) var(--sy, 40%), rgba(168,195,196,.11), rgba(168,195,196,0) 62%); }
-    .projects .card { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); will-change: transform; }
+    .projects .card { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
     .projects .card:hover { transform: perspective(900px) translate(-3px, -3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
     @media (hover: none) { .projects .card:hover { transform: none; } }
     @media (prefers-reduced-motion: reduce) { .projects .card, .projects .card:hover { transform: none; } }
@@ -380,7 +382,7 @@
 
   <main id="main" tabindex="-1" style="outline:none">
     <section id="hero">
-      <div class="hero-portrait" aria-hidden="false"><img src="images/portrait.jpg" alt="Portrait of Madalitso Skjelnes" width="1320" height="2342" fetchpriority="high"></div>
+      <div class="hero-portrait" aria-hidden="false"><img src="images/portrait-1100.webp" srcset="images/portrait-700.webp 700w, images/portrait-1100.webp 1100w" sizes="(max-width: 820px) 100vw, 56vw" alt="Portrait of Madalitso Skjelnes" width="1100" height="1951" fetchpriority="high" decoding="async"></div>
       <div class="container hero-wrap">
         <div>
           <p class="eyebrow">Full-stack developer</p>
@@ -397,7 +399,7 @@
     <section id="about" class="band">
       <div class="container about">
         <figure class="about-photo" data-reveal>
-          <img src="images/work-nkom.png" alt="Madalitso at work in the IT department at Nkom" loading="lazy">
+          <img src="images/work-560.webp" alt="Madalitso at work in the IT department at Nkom" width="560" height="765" loading="lazy" decoding="async">
           <figcaption>At work as an IT intern at Nkom</figcaption>
         </figure>
         <div class="about-text" data-reveal>
@@ -427,7 +429,7 @@
       <div class="container">
         <div class="section-head" data-reveal><h2>Teamwork</h2></div>
         <figure class="team-photo" data-reveal>
-          <img src="images/team.jpg" alt="The six members of CORE-6 standing side by side outdoors at UiA" width="2000" height="1124" loading="lazy">
+          <img src="images/team-1400.webp" srcset="images/team-800.webp 800w, images/team-1400.webp 1400w" sizes="(max-width: 1100px) 92vw, 1040px" alt="The six members of CORE-6 standing side by side outdoors at UiA" width="1400" height="787" loading="lazy" decoding="async">
           <figcaption>CORE-6, my bachelor group at UiA</figcaption>
         </figure>
         <div class="team-grid">
@@ -685,7 +687,7 @@
       var loader = document.querySelector(".loader");
       if (loader && !html.classList.contains("show-loader")) { loader.remove(); loader = null; }
       if (loader) {
-        var MIN = reduced ? 400 : 1500, MAX = 3500, start = Date.now(), finished = false;
+        var MIN = reduced ? 400 : (window.innerWidth <= 820 ? 700 : 1500), MAX = 3500, start = Date.now(), finished = false;
         var open = function () {
           if (finished) return; finished = true;
           setTimeout(function () {
@@ -707,16 +709,17 @@
           var host = cv.parentElement, ctx = cv.getContext("2d");
           if (!ctx) return;
           var pts = [], w = 0, h = 0, mouse = null, raf = 0, running = false, visible = true;
+          var still = reduced || (navigator.hardwareConcurrency || 4) <= 2 || (navigator.deviceMemory || 4) <= 2;
           function mk(x, y, burst) {
             var a = Math.random() * Math.PI * 2, v = burst ? 0.9 : 0.12 + Math.random() * 0.2;
             return { x: x == null ? Math.random() * w : x, y: y == null ? Math.random() * h : y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1 + Math.random() * 1.4 };
           }
           function size() {
-            var r = host.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+            var r = host.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 820 ? 1.5 : 2);
             w = r.width; h = r.height;
             cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            var target = Math.min(Math.round(w * h / (w < 820 ? 17000 : 13000)), 110);
+            var target = w < 820 ? Math.min(Math.round(w * h / 22000), 40) : Math.min(Math.round(w * h / 13000), 110);
             while (pts.length < target) pts.push(mk());
             if (pts.length > target + 30) pts.length = target + 30;
           }
@@ -761,12 +764,12 @@
             for (i = 0; i < pts.length; i++) { p = pts[i]; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
           }
           function loop() { if (!running) return; frame(true); raf = requestAnimationFrame(loop); }
-          function start() { if (running || reduced || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
+          function start() { if (running || still || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
           function stop() { running = false; cancelAnimationFrame(raf); }
 
           size();
           frame(false);
-          if (reduced) { window.addEventListener("resize", function () { size(); frame(false); }); return; }
+          if (still) { window.addEventListener("resize", function () { size(); frame(false); }); return; }
 
           if ("ResizeObserver" in window) new ResizeObserver(size).observe(host); else window.addEventListener("resize", size);
           host.addEventListener("pointermove", function (e) { var r = host.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; }, { passive: true });
