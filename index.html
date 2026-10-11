@@ -240,6 +240,7 @@
     /* ---------- Mini demos ---------- */
     .card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin-top: .5rem; }
     .card-actions .go { margin-top: 0; }
+    .card-actions .live-link { position: relative; z-index: 2; }
     .demo-btn { padding: .45rem 1rem; font-size: .9rem; border-radius: .6rem; position: relative; z-index: 3; }
     dialog#demo-dialog { padding: 0; border: 2px solid var(--ink); border-radius: 1rem; width: min(940px, 94vw); max-height: 90vh; background: var(--bg); color: var(--text); overflow: auto; }
     dialog#demo-dialog::backdrop { background: rgba(21,25,30,.72); }
@@ -272,7 +273,26 @@
     .s-approved { background: #2f6b6e; } .s-pending { background: #d99a2b; } .s-rejected { background: #8a8f93; }
     .dm-legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .82rem; margin-top: .6rem; color: var(--muted); }
     .dm-legend span { display: inline-flex; align-items: center; gap: .35rem; }
-    #av-svg { width: 100%; height: auto; display: block; border: 2px solid var(--ink); border-radius: .6rem; cursor: crosshair; touch-action: manipulation; }
+    .wh-wrap { position: relative; isolation: isolate; width: 100%; aspect-ratio: 16 / 10; min-height: 320px; overflow: hidden; border: 2px solid var(--ink); border-radius: .8rem; background: #e4e8e8; }
+    .wh-map { position: absolute; inset: 0; cursor: crosshair; font: inherit; font-size: .8rem; }
+    .wh-map:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+    .wh-toast { position: absolute; top: .7rem; left: 50%; z-index: 2100; transform: translateX(-50%); max-width: 92%; padding: .45rem .9rem; border-radius: .5rem; background: var(--accent); color: #fff; font-size: .85rem; font-weight: 600; text-align: center; box-shadow: 0 6px 16px rgba(21,25,30,.25); pointer-events: none; }
+    .wh-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem 1rem; margin-top: 1rem; font-size: .88rem; color: var(--ink); }
+    .wh-pill { padding: .35rem .9rem; border-radius: 999px; background: rgba(47,107,110,.12); color: var(--accent); font-weight: 600; }
+    .wh-marker span { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: hsl(var(--hue), 36%, 46%); border: 2px solid #fff; box-shadow: 0 3px 8px rgba(21,25,30,.35); color: #fff; }
+    .wheel { --x: 0px; --y: 0px; --icon-radius: -18px; position: absolute; top: var(--y); left: var(--x); width: 220px; height: 220px; transform: translate(-50%, -50%); transform-origin: 0 0; z-index: 2000; }
+    .wheel.hidden { opacity: 0; pointer-events: none; }
+    .wheel:not(.on) { pointer-events: none; }
+    .wheel.on .arc { opacity: .85; transform: scale(1) rotate(var(--rotation)) !important; transition-timing-function: cubic-bezier(0, .5, .5, 1.5); pointer-events: auto; }
+    .wheel .arc { position: absolute; top: 0; right: 0; width: 50%; height: 50%; transform-origin: 0 100%; background-image: radial-gradient(circle at 0 100%, transparent, transparent 29.5%, var(--color-border) 30%, var(--color-border) 30.5%, var(--color) 31%, var(--color) 50%, var(--color-border) 50.25%, var(--color-border) 51.5%, transparent 51.75%, transparent); transition-property: transform, opacity; transition-duration: .3s; transition-timing-function: cubic-bezier(.4, -.4, .7, -.3); clip-path: polygon(0 100%, 100% 100%, 32.5% 0); opacity: 0; transform: scale(0) rotate(var(--rotation)); pointer-events: none; cursor: pointer; }
+    .wheel .arc svg { position: absolute; top: 50%; left: 50%; color: rgba(255,255,255,.9); transform: translate(calc(var(--icon-radius) * .809), calc(var(--icon-radius) * -.588)) rotate(calc(var(--rotation) * -1)); }
+    .wheel .arc:focus-visible { outline: 3px solid #fff; outline-offset: -6px; z-index: 3; }
+    .wheel .arc:nth-child(1) { --rotation: -18deg; --color: hsl(0, 36%, 55%); --color-border: hsl(0, 36%, 38%); transition-delay: .015s; }
+    .wheel .arc:nth-child(2) { --rotation: 54deg; --color: hsl(72, 36%, 55%); --color-border: hsl(72, 36%, 38%); transition-delay: .03s; }
+    .wheel .arc:nth-child(3) { --rotation: 126deg; --color: hsl(144, 36%, 55%); --color-border: hsl(144, 36%, 38%); transition-delay: .045s; }
+    .wheel .arc:nth-child(4) { --rotation: 198deg; --color: hsl(216, 36%, 55%); --color-border: hsl(216, 36%, 38%); transition-delay: .06s; }
+    .wheel .arc:nth-child(5) { --rotation: 270deg; --color: hsl(288, 36%, 55%); --color-border: hsl(288, 36%, 38%); transition-delay: .075s; }
+    .wheel[data-chosen="1"] .arc:nth-child(1), .wheel[data-chosen="2"] .arc:nth-child(2), .wheel[data-chosen="3"] .arc:nth-child(3), .wheel[data-chosen="4"] .arc:nth-child(4), .wheel[data-chosen="5"] .arc:nth-child(5) { opacity: 1; transform: scale(1.1) rotate(var(--rotation)) !important; filter: brightness(130%); }
     .cc-row { display: grid; grid-template-columns: 1fr 1.2fr; gap: .4rem .8rem; align-items: center; padding: .7rem 0; border-bottom: 1px solid var(--line); }
     .cc-row:last-child { border-bottom: 0; }
     .cc-row b { color: var(--ink); }
@@ -511,13 +531,13 @@
             <div class="meta">2025 · Kartverket &amp; Norsk Luftambulanse</div>
             <h3>Aviation Obstacle Registry</h3>
             <p>Web app for reporting aviation obstacles. I built the backend, security and the pilot map.</p>
-            <div class="card-actions"><button type="button" class="btn btn-dark demo-btn" data-demo="aviation">Try demo</button><a class="go card-link" href="https://github.com/Phiri-Madalitso/m.prosjekt">View source →</a></div>
+            <div class="card-actions"><button type="button" class="btn btn-dark demo-btn" data-demo="aviation">Try demo</button><a class="go card-link" href="https://github.com/noanor/kart-oppgave">View source →</a></div>
           </article>
           <article class="card" data-reveal>
             <div class="meta">2026 · Independent</div>
             <h3>Golden Emerald Guest House</h3>
             <p>A full website for a guest house in Zambia, built end to end.</p>
-            <div class="card-actions"><button type="button" class="btn btn-dark demo-btn" data-demo="guesthouse">Try demo</button><a class="go card-link" href="https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse">View source →</a></div>
+            <div class="card-actions"><button type="button" class="btn btn-dark demo-btn" data-demo="guesthouse">Try demo</button><a class="go live-link" href="https://goldenemerald.org/" target="_blank" rel="noopener">Open live site →</a><a class="go card-link" href="https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse">View source →</a></div>
           </article>
           <article class="card" data-reveal>
             <div class="meta">2026 · Independent</div>
@@ -671,7 +691,7 @@
         "A digital meal and care card app for nursing homes.": "En digital mat- og omsorgskort-app som hjelper ansatte på sykehjem med å håndtere måltidsplaner.",
         "Report, diary and presentation from my internship at Nkom.": "Rapport, dagbok og presentasjon fra praksisen min hos Nasjonal kommunikasjonsmyndighet.",
         "Healthcare": "Helse", "Norwegian": "Norsk",
-        "View source →": "Se kildekode →", "Open live site →": "Åpne nettsiden →", "Source →": "Kildekode →", "All on GitHub →": "Alle på GitHub →",
+        "View source →": "Se kildekode →", "Open live site →": "Åpne nettsiden →", "Open the real website": "Åpne den ekte nettsiden", "Source →": "Kildekode →", "All on GitHub →": "Alle på GitHub →",
         "Show more projects": "Vis flere prosjekter", "Show fewer projects": "Vis færre prosjekter",
         "Interactive 3D web experience for a clothing brand": "Interaktiv 3D-opplevelse på nett for et klesmerke",
         "Website for a car wash startup in Lusaka": "Nettsted for en bilvask-oppstart i Lusaka",
@@ -769,98 +789,145 @@
       function esc(x) { return String(x).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
       function $(sel, root) { return (root || bodyEl).querySelector(sel); }
 
-      /* ---------- Aviation Obstacle Registry ---------- */
-      var av = { role: "pilot", pick: null, next: 4, list: [
-        { id: 1, x: 105, y: 80, type: "crane", h: 45, status: "approved", mine: false },
-        { id: 2, x: 255, y: 135, type: "mast", h: 120, status: "approved", mine: false },
-        { id: 3, x: 175, y: 190, type: "turbine", h: 95, status: "pending", mine: false }
-      ] };
-      var AV_TYPES = { crane: ["Crane", "Byggekran"], mast: ["Radio mast", "Radiomast"], line: ["Power line", "Kraftlinje"], turbine: ["Wind turbine", "Vindturbin"] };
-      function avName(k) { return T(AV_TYPES[k][0], AV_TYPES[k][1]); }
-      function avStatus(st) { return { approved: T("Approved", "Godkjent"), pending: T("Pending", "Venter"), rejected: T("Rejected", "Avvist") }[st]; }
-      function avVisible(o) { return av.role === "registrar" || o.status === "approved" || (o.mine && o.status !== "rejected"); }
+      /* ---------- Aviation Obstacle Registry: map + radial "wheel" menu, modelled on the CORE-6 project page ---------- */
+      var AV_ICON = function (p) { return '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + "</svg>"; };
+      var AV_TYPES = [
+        { k: "point", hue: 0, n: ["Point", "Punkt"], i: AV_ICON('<circle cx="12" cy="10" r="5"/><path d="M12 15v6"/>') },
+        { k: "mast", hue: 72, n: ["Mast", "Mast"], i: AV_ICON('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/>') },
+        { k: "line", hue: 144, n: ["Line", "Linje"], i: AV_ICON('<path d="M3 17l6-7 5 4 7-8"/>') },
+        { k: "powerline", hue: 216, n: ["Power span", "Luftspenn"], i: AV_ICON('<path d="M4 20L20 4"/>') },
+        { k: "area", hue: 288, n: ["Area", "Areal"], i: AV_ICON('<rect x="5" y="5" width="14" height="14" rx="1"/>') }
+      ];
+      var avMap = null, avDrafts = [], avCount = 0, avCloseWheel = null;
+      function avType(k) { return AV_TYPES.filter(function (t) { return t.k === k; })[0]; }
+      function avLoadLeaflet(ok, fail) {
+        if (window.L) return ok();
+        if (!document.getElementById("lf-css")) {
+          var l = document.createElement("link"); l.id = "lf-css"; l.rel = "stylesheet";
+          l.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"; document.head.appendChild(l);
+        }
+        var sc = document.getElementById("lf-js");
+        if (!sc) { sc = document.createElement("script"); sc.id = "lf-js"; sc.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"; document.head.appendChild(sc); }
+        sc.addEventListener("load", ok); sc.addEventListener("error", fail);
+      }
+      dlg.addEventListener("cancel", function (e) { if (avCloseWheel && avCloseWheel(true)) e.preventDefault(); });
       function mountAviation(root) {
-        var opts = Object.keys(AV_TYPES).map(function (k) { return '<option value="' + k + '">' + esc(avName(k)) + "</option>"; }).join("");
+        if (avMap) { avMap.remove(); avMap = null; }
+        avCloseWheel = null;
+        var arcs = AV_TYPES.map(function (t) {
+          return '<div class="arc" data-type="' + t.k + '" role="button" tabindex="-1" aria-label="' + esc(T(t.n[0], t.n[1])) + '">' + t.i + "</div>";
+        }).join("");
         root.innerHTML =
-          '<div class="dm-seg" role="group" aria-label="' + esc(T("Role", "Rolle")) + '">' +
-            '<button type="button" data-role="pilot">' + esc(T("Pilot", "Pilot")) + '</button>' +
-            '<button type="button" data-role="registrar">' + esc(T("Registrar", "Saksbehandler")) + '</button></div>' +
-          '<p class="dm-hint" style="margin:-.4rem 0 1rem">' + esc(T("Role-based access: pilots report obstacles, registrars validate them.", "Rollebasert tilgang: piloter melder hindre, saksbehandlere validerer dem.")) + '</p>' +
-          '<div class="dm-grid"><div>' +
-            '<svg id="av-svg" viewBox="0 0 400 260" role="img" aria-label="' + esc(T("Schematic map. Click to place an obstacle.", "Skjematisk kart. Klikk for å plassere et hinder.")) + '">' +
-              '<rect width="400" height="260" fill="#cfe0e3"/>' +
-              '<path d="M0 0H255C232 38 276 72 246 112C218 148 266 196 236 260H0Z" fill="#e6ece7" stroke="#b9c7bf"/>' +
-              '<path d="M40 215 L235 118" stroke="#2f6b6e" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>' +
-              '<rect x="70" y="150" width="130" height="9" rx="2" fill="#9aa5a8" transform="rotate(-27 135 154)"/>' +
-              '<text x="26" y="236" font-size="10" fill="#5f676c">' + esc(T("Flight corridor", "Flykorridor")) + '</text>' +
-              '<g id="av-markers"></g></svg>' +
-            '<div class="dm-legend"><span><i class="dot s-approved"></i>' + esc(avStatus("approved")) + '</span><span><i class="dot s-pending"></i>' + esc(avStatus("pending")) + '</span><span><i class="dot s-rejected"></i>' + esc(avStatus("rejected")) + '</span></div>' +
-          '</div><div>' +
-            '<form class="dm-card dm-form" id="av-form" novalidate><h3>' + esc(T("Report an obstacle", "Meld et hinder")) + '</h3>' +
-              '<label>' + esc(T("Type", "Type")) + '<select id="av-type">' + opts + '</select></label>' +
-              '<label>' + esc(T("Height (m)", "Høyde (m)")) + '<input id="av-h" type="number" inputmode="numeric" min="1" max="500" placeholder="45"></label>' +
-              '<button class="btn" type="submit">' + esc(T("Submit report", "Send inn melding")) + '</button>' +
-              '<p class="dm-hint" id="av-hint"></p></form>' +
-            '<p class="dm-msg" id="av-msg" role="status"></p>' +
-            '<div class="dm-card" style="margin-top:.8rem"><h3>' + esc(T("Registry", "Register")) + '</h3><ul class="dm-list" id="av-list"></ul></div>' +
-          '</div></div>';
+          '<div class="wh-wrap"><div class="wh-map" id="av-map" tabindex="0" aria-label="' + esc(T("Interactive map. Click a spot, or press Enter, to open the wheel and mark an aviation obstacle.", "Interaktivt kart. Klikk et sted, eller trykk Enter, for å åpne hjulet og markere et luftfartshinder.")) + '"></div>' +
+          '<div class="wheel hidden" role="group" aria-label="' + esc(T("Choose obstacle type", "Velg type luftfartshinder")) + '">' + arcs + "</div>" +
+          '<div class="wh-toast" role="status" aria-live="polite" hidden></div></div>' +
+          '<div class="wh-foot"><span class="wh-pill">' + esc(T("Click the map to mark an obstacle", "Klikk i kartet for å markere et hinder")) + "</span>" +
+          "<span>" + esc(T("Obstacles in draft:", "Hindre i draft:")) + ' <strong id="av-count">0</strong></span>' +
+          '<button type="button" class="dm-mini" id="av-send" hidden>' + esc(T("Submit to registrar", "Send til registerfører")) + "</button>" +
+          '<button type="button" class="dm-mini" id="av-reset" hidden>' + esc(T("Reset", "Nullstill")) + "</button></div>" +
+          '<p class="dm-hint">' + esc(T("Two clicks save an obstacle as a draft. In the real app it is submitted when the mission is over, then a registrar at Kartverket approves or rejects it.", "To klikk lagrer et hinder som draft. I den ekte appen sendes det inn når oppdraget er ferdig, og en registerfører i Kartverket godkjenner eller avviser det.")) + "</p>";
 
-        var svg = $("#av-svg"), msg = $("#av-msg");
-        function say(t, err) { msg.textContent = t; msg.className = "dm-msg" + (err ? " err" : ""); }
-        function drawMap() {
-          var g = $("#av-markers"), out = "";
-          av.list.filter(avVisible).forEach(function (o) {
-            out += '<circle cx="' + o.x + '" cy="' + o.y + '" r="7" class="s-' + o.status + '" fill="currentColor" stroke="#fff" stroke-width="2" style="color:' + { approved: "#2f6b6e", pending: "#d99a2b", rejected: "#8a8f93" }[o.status] + '"><title>' + esc(avName(o.type) + " · " + o.h + " m · " + avStatus(o.status)) + "</title></circle>";
-          });
-          if (av.pick) out += '<circle cx="' + av.pick.x + '" cy="' + av.pick.y + '" r="9" fill="none" stroke="#15191e" stroke-width="2" stroke-dasharray="3 3"/>';
-          g.innerHTML = out;
-        }
-        function drawList() {
-          var items = av.list.filter(avVisible).map(function (o) {
-            var act = "";
-            if (av.role === "registrar" && o.status === "pending") {
-              act = '<span class="sp"></span><button type="button" class="dm-mini" data-id="' + o.id + '" data-act="approved">' + esc(T("Approve", "Godkjenn")) + '</button><button type="button" class="dm-mini" data-id="' + o.id + '" data-act="rejected">' + esc(T("Reject", "Avvis")) + "</button>";
+        var wrap = root.querySelector(".wh-wrap"), mapEl = root.querySelector("#av-map"), wheel = root.querySelector(".wheel"),
+            toast = root.querySelector(".wh-toast"), countEl = root.querySelector("#av-count"),
+            sendBtn = root.querySelector("#av-send"), resetBtn = root.querySelector("#av-reset"),
+            armEls = Array.prototype.slice.call(wheel.querySelectorAll(".arc"));
+
+        avLoadLeaflet(function () {
+          if (!root.isConnected || avMap) return;
+          var START = { c: [58.115, 7.97], z: 12 }; /* Kristiansand, where the project was built */
+          var map = avMap = L.map(mapEl, { center: START.c, zoom: START.z, scrollWheelZoom: false, doubleClickZoom: false });
+          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(map);
+          var layer = L.layerGroup().addTo(map), pending = null, isOpen = false, justOpened = false, timer = 0;
+          setTimeout(function () { if (avMap === map) map.invalidateSize(); }, 60);
+
+          function sync() {
+            countEl.textContent = avDrafts.length;
+            sendBtn.hidden = resetBtn.hidden = !avDrafts.length;
+          }
+          function say(m) {
+            toast.textContent = m; toast.hidden = false; clearTimeout(timer);
+            timer = setTimeout(function () { toast.hidden = true; }, 2400);
+          }
+          function pin(d) {
+            var t = avType(d.type);
+            var icon = L.divIcon({ className: "wh-marker", html: '<span style="--hue:' + t.hue + '">' + t.i + "</span>", iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -14] });
+            L.marker([d.lat, d.lng], { icon: icon, title: T(t.n[0], t.n[1]) }).bindPopup(
+              "<strong>" + esc(T("Obstacle", "Hinder")) + " #" + d.n + "</strong><br>" + esc(T("Type", "Type")) + ": " + esc(T(t.n[0], t.n[1])) +
+              "<br>Status: Draft<br>Lat: " + d.lat.toFixed(5) + "<br>Lng: " + d.lng.toFixed(5)).addTo(layer);
+          }
+          avDrafts.forEach(pin); sync();
+
+          function setChosen(i) { wheel.setAttribute("data-chosen", i); }
+          function openWheel(pt, ll) {
+            var r = wheel.offsetWidth / 2;
+            wheel.style.setProperty("--x", Math.min(Math.max(pt.x, r), wrap.clientWidth - r) + "px");
+            wheel.style.setProperty("--y", Math.min(Math.max(pt.y, r), wrap.clientHeight - r) + "px");
+            pending = ll; setChosen(0);
+            wheel.classList.remove("hidden");
+            setTimeout(function () { wheel.classList.add("on"); }, 0);
+            isOpen = true; justOpened = true;
+            setTimeout(function () { justOpened = false; }, 0);
+            armEls.forEach(function (a) { a.setAttribute("tabindex", "0"); });
+          }
+          function closeWheel(focusMap) {
+            if (!isOpen) return false;
+            wheel.classList.remove("on");
+            setTimeout(function () { if (!isOpen) wheel.classList.add("hidden"); }, 300);
+            setChosen(0); isOpen = false; pending = null;
+            armEls.forEach(function (a) { a.setAttribute("tabindex", "-1"); });
+            if (focusMap) mapEl.focus();
+            return true;
+          }
+          avCloseWheel = closeWheel;
+          function choose(arc) {
+            if (!pending) return;
+            var d = { lat: pending.lat, lng: pending.lng, type: arc.dataset.type, n: ++avCount };
+            avDrafts.push(d); pin(d); sync();
+            say(T(avType(d.type).n[0], avType(d.type).n[1]) + " " + T("added to draft!", "lagt til i draft!"));
+          }
+          map.on("click", function (e) { if (isOpen) closeWheel(); else openWheel(e.containerPoint, e.latlng); });
+          map.on("movestart zoomstart", function () { closeWheel(); });
+          mapEl.addEventListener("keydown", function (e) {
+            if (isOpen || e.target !== mapEl) return;
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              var sz = map.getSize(); openWheel(L.point(sz.x / 2, sz.y / 2), map.getCenter());
+              armEls[0].focus();
             }
-            return '<li><i class="dot s-' + o.status + '"></i><b>' + esc(avName(o.type)) + "</b> " + o.h + " m · " + esc(avStatus(o.status)) + (o.mine ? " · " + esc(T("yours", "din")) : "") + act + "</li>";
           });
-          $("#av-list").innerHTML = items.join("") || "<li>" + esc(T("Nothing to show.", "Ingenting å vise.")) + "</li>";
-        }
-        function drawHint() {
-          $("#av-hint").textContent = av.pick ? T("Position selected. Fill in the details and submit.", "Posisjon valgt. Fyll inn detaljene og send inn.") : T("Click the map to choose a position.", "Klikk på kartet for å velge posisjon.");
-        }
-        function all() {
-          drawMap(); drawList(); drawHint();
-          root.querySelectorAll("[data-role]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.role === av.role ? "true" : "false"); });
-        }
-        root.querySelectorAll("[data-role]").forEach(function (b) {
-          b.addEventListener("click", function () {
-            av.role = b.dataset.role;
-            say(av.role === "registrar" ? T("Registrar view: you can see and validate all reports.", "Saksbehandlervisning: du ser og validerer alle meldinger.") : T("Pilot view: you see approved obstacles and your own reports.", "Pilotvisning: du ser godkjente hindre og dine egne meldinger."));
-            all();
+          armEls.forEach(function (a, i) {
+            a.addEventListener("mouseenter", function () { if (isOpen) setChosen(i + 1); });
+            a.addEventListener("mouseleave", function () { if (isOpen) setChosen(0); });
+            a.addEventListener("focus", function () { if (isOpen) setChosen(i + 1); });
+            a.addEventListener("blur", function () { if (isOpen) setChosen(0); });
           });
+          wheel.addEventListener("click", function (e) {
+            var arc = e.target.closest(".arc"); if (!arc || !isOpen) return;
+            choose(arc); closeWheel();
+          });
+          wheel.addEventListener("keydown", function (e) {
+            var arc = e.target.closest(".arc"); if (!arc || !isOpen) return;
+            var i = armEls.indexOf(arc);
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(arc); closeWheel(true); }
+            else if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); armEls[(i + 1) % armEls.length].focus(); }
+            else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); armEls[(i - 1 + armEls.length) % armEls.length].focus(); }
+          });
+          root.addEventListener("click", function (e) {
+            if (!isOpen || justOpened) return;
+            if (!e.target.closest(".wheel") && !e.target.closest(".wh-map")) closeWheel();
+          });
+          resetBtn.addEventListener("click", function () {
+            layer.clearLayers(); avDrafts = []; avCount = 0; sync();
+            map.setView(START.c, START.z); say(T("Draft cleared", "Draft tømt"));
+          });
+          sendBtn.addEventListener("click", function () {
+            var n = avDrafts.length;
+            layer.clearLayers(); avDrafts = []; avCount = 0; sync();
+            say(n + " " + (n === 1 ? T("obstacle sent to the registrar", "hinder sendt til registerfører") : T("obstacles sent to the registrar", "hindre sendt til registerfører")));
+          });
+        }, function () {
+          mapEl.innerHTML = '<p class="dm-hint" style="padding:1rem">' + esc(T("The map could not load. Check your connection and reopen the demo.", "Kartet kunne ikke lastes. Sjekk tilkoblingen og åpne demoen på nytt.")) + "</p>";
         });
-        svg.addEventListener("click", function (e) {
-          var r = svg.getBoundingClientRect();
-          av.pick = { x: Math.round((e.clientX - r.left) / r.width * 400), y: Math.round((e.clientY - r.top) / r.height * 260) };
-          say(""); drawMap(); drawHint();
-        });
-        $("#av-form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var h = parseInt($("#av-h").value, 10);
-          if (!av.pick) return say(T("Click the map to choose a position first.", "Klikk på kartet for å velge posisjon først."), true);
-          if (!(h >= 1 && h <= 500)) return say(T("Height must be between 1 and 500 m.", "Høyden må være mellom 1 og 500 m."), true);
-          av.list.push({ id: av.next++, x: av.pick.x, y: av.pick.y, type: $("#av-type").value, h: h, status: "pending", mine: true });
-          av.pick = null; $("#av-h").value = "";
-          say(T("Report sent. A registrar must approve it before other pilots see it.", "Meldingen er sendt. En saksbehandler må godkjenne den før andre piloter ser den."));
-          all();
-        });
-        $("#av-list").addEventListener("click", function (e) {
-          var b = e.target.closest("[data-act]"); if (!b) return;
-          av.list.forEach(function (o) { if (o.id === +b.dataset.id) o.status = b.dataset.act; });
-          say(b.dataset.act === "approved" ? T("Approved. Pilots can now see it.", "Godkjent. Piloter kan nå se den.") : T("Rejected. Pilots will not see it.", "Avvist. Piloter ser den ikke."));
-          all();
-        });
-        all();
       }
 
       /* ---------- CareCard ---------- */
@@ -980,16 +1047,16 @@
 
       /* ---------- Dialog plumbing ---------- */
       var DEMOS = {
-        aviation: { title: function () { return T("Demo: Aviation Obstacle Registry", "Demo: Luftfartshinderregister"); }, mount: mountAviation, repo: "https://github.com/Phiri-Madalitso/m.prosjekt" },
+        aviation: { title: function () { return T("Demo: Aviation Obstacle Registry", "Demo: Luftfartshinderregister"); }, mount: mountAviation, repo: "https://github.com/noanor/kart-oppgave" },
         carecard: { title: function () { return T("Demo: CareCard", "Demo: CareCard"); }, mount: mountCare, repo: "https://github.com/Phiri-Madalitso/CareCard" },
-        guesthouse: { title: function () { return T("Demo: Golden Emerald Guest House", "Demo: Golden Emerald Guest House"); }, mount: mountGuest, repo: "https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse" }
+        guesthouse: { title: function () { return T("Demo: Golden Emerald Guest House", "Demo: Golden Emerald Guest House"); }, mount: mountGuest, repo: "https://github.com/Phiri-Madalitso/Golden-Emerald-Guesthouse", live: "https://goldenemerald.org/" }
       };
       function mount() {
         var d = DEMOS[current];
         titleEl.textContent = d.title();
         closeBtn.setAttribute("aria-label", T("Close", "Lukk"));
         bodyEl.innerHTML = '<p class="dm-note">' + esc(T("Interactive demo: a simplified, fictional version built for this portfolio. Not the real application or its data.", "Interaktiv demo: en forenklet, fiktiv versjon laget for denne porteføljen. Ikke den ekte applikasjonen eller dataene.")) +
-          ' <a href="' + d.repo + '" target="_blank" rel="noopener">' + esc(T("View the real source", "Se den ekte kildekoden")) + ' →</a></p><div id="dm-app"></div>';
+          ' <a href="' + d.repo + '" target="_blank" rel="noopener">' + esc(T("View the real source", "Se den ekte kildekoden")) + ' →</a>' + (d.live ? ' <a href="' + d.live + '" target="_blank" rel="noopener">' + esc(T("Open the real website", "Åpne den ekte nettsiden")) + ' →</a>' : "") + '</p><div id="dm-app"></div>';
         d.mount($("#dm-app"));
       }
       document.querySelectorAll("[data-demo]").forEach(function (b) {
